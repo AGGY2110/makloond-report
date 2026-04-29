@@ -3,7 +3,8 @@ import { AppProvider, useApp } from './context/AppContext';
 import Dashboard from './pages/Dashboard';
 import InputForm from './pages/InputForm';
 import Analysis from './pages/Analysis';
-import { LayoutDashboard, PlusCircle, BarChart3, Moon, Sun, Menu, X } from 'lucide-react';
+import ExportPanel from './components/ExportPanel';
+import { LayoutDashboard, PlusCircle, BarChart3, Moon, Sun, Download } from 'lucide-react';
 
 const PLATFORM = {
   zonanyam: ['TikTok', 'Shopee'],
@@ -25,7 +26,8 @@ function Nav() {
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'input', label: 'Input Laporan', icon: PlusCircle },
-    { id: 'analysis', label: 'Analisis', icon: BarChart3 }
+    { id: 'analysis', label: 'Analisis', icon: BarChart3 },
+    { id: 'export', label: 'Export', icon: Download }
   ];
 
   const brandColor = BRAND_COLORS[selectedBrand];
@@ -104,6 +106,7 @@ function AppContent() {
         {currentPage === 'dashboard' && <Dashboard />}
         {currentPage === 'input' && <InputForm />}
         {currentPage === 'analysis' && <Analysis />}
+        {currentPage === 'export' && <ExportPanel />}
       </main>
     </>
   );

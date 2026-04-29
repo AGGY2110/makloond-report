@@ -16,61 +16,48 @@ const BRAND_COLORS = {
   paberik101: '#10b981'
 };
 
+const BRAND_PLATFORMS = {
+  zonanyam: ['tiktok', 'shopee'],
+  sentral_basreng: ['tiktok', 'shopee'],
+  ngaciin: ['tiktok', 'shopee'],
+  paberik101: ['meta']
+};
+
 const INITIAL_REPORT = {
   date: new Date().toISOString().split('T')[0],
   brand: 'zonanyam',
-  kol: {
-    total_invited: 0,
-    affiliates_sent: [],
-    manual_affiliates: []
+  kol: { total_invited: 0, affiliates_sent: [], manual_affiliates: [] },
+  tiktok: {
+    spending_ads: 0, gmv_total: 0,
+    gmv_affiliate: 0, gmv_konten_pribadi: 0, gmv_live: 0, gmv_shop_lain: 0,
+    traffic: 0, konversi: 0, konten_tayang_gmv: 0, produk_terjual: []
   },
-  marketplace: {
-    spending_ads: 0,
-    gmv_total: 0,
-    gmv_affiliate: 0,
-    gmv_konten_pribadi: 0,
-    gmv_live: 0,
-    gmv_shop_lain: 0,
-    traffic: 0,
-    konversi: 0,
-    konten_tayang_gmv: 0,
-    produk_terjual: []
+  shopee: {
+    spending_ads: 0, gmv_total: 0,
+    gmv_affiliate: 0, gmv_flash_sale: 0, gmv_voucher: 0, gmv_organik: 0,
+    traffic: 0, konversi: 0, produk_terjual: []
   },
-  live: {
-    gmv: 0,
-    spending_ads: 0,
-    penonton: 0,
-    konversi: 0
+  meta: {
+    spending_ads: 0, leads_masuk: 0, closing: 0, omset: 0
   },
-  konten: {
-    posts: []
-  },
-  cs_marketplace: {
-    resi_dicetak: 0,
-    komplain: [],
-    recall_customer: 0
-  },
+  live: { gmv: 0, spending_ads: 0, penonton: 0, konversi: 0 },
+  konten: { posts: [] },
+  cs_marketplace: { tiktok_resi: 0, shopee_resi: 0, komplain: [], recall_customer: 0 },
   cs_wa: {
-    customer_masuk_meta: 0,
-    closing: [],
-    customer_lama: 0,
-    omset: 0,
-    reseller_join_zonanyam: 0,
-    reseller_join_basreng: 0
+    customer_masuk_meta: 0, closing: [], customer_lama: 0,
+    omset: 0, reseller_join_zonanyam: 0, reseller_join_basreng: 0
   }
 };
 
 function loadData() {
   try {
-    const raw = localStorage.getItem('marketing_reports');
+    const raw = localStorage.getItem('marketing_reports_v2');
     return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
+  } catch { return []; }
 }
 
 function saveData(reports) {
-  localStorage.setItem('marketing_reports', JSON.stringify(reports));
+  localStorage.setItem('marketing_reports_v2', JSON.stringify(reports));
 }
 
 export function AppProvider({ children }) {
@@ -85,20 +72,16 @@ export function AppProvider({ children }) {
   const addReport = (report) => {
     setReports(prev => {
       const exists = prev.findIndex(r => r.date === report.date && r.brand === report.brand);
-      if (exists >= 0) {
-        const updated = [...prev];
-        updated[exists] = report;
-        return updated;
-      }
+      if (exists >= 0) { const u = [...prev]; u[exists] = report; return u; }
       return [...prev, report];
     });
   };
 
-  const deleteReport = (date, brand) => {
+  const deleteReport = (date, brand) =>
     setReports(prev => prev.filter(r => !(r.date === date && r.brand === brand)));
-  };
 
-  const getReportsByBrand = (brand) => reports.filter(r => r.brand === brand).sort((a, b) => new Date(a.date) - new Date(b.date));
+  const getReportsByBrand = (brand) =>
+    reports.filter(r => r.brand === brand).sort((a, b) => new Date(a.date) - new Date(b.date));
 
   const getFilteredReports = (brand) => {
     let data = getReportsByBrand(brand);
@@ -112,7 +95,7 @@ export function AppProvider({ children }) {
       reports, addReport, deleteReport, selectedBrand, setSelectedBrand,
       currentPage, setCurrentPage, editingReport, setEditingReport,
       dateRange, setDateRange, getReportsByBrand, getFilteredReports,
-      BRANDS, BRAND_LABELS, BRAND_COLORS, INITIAL_REPORT
+      BRANDS, BRAND_LABELS, BRAND_COLORS, BRAND_PLATFORMS, INITIAL_REPORT
     }}>
       {children}
     </AppContext.Provider>

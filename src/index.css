@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-primary: #f8f7f4;
+  --bg-nav: #ffffff;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --bg-hover: #f4f3f0;
+  --bg-hover2: #eae9e5;
+  --text-primary: #1a1a1a;
+  --text-muted: #6b7280;
+  --border: #e5e3de;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #111110;
+  --bg-nav: #1a1918;
+  --bg-card: #1e1d1b;
+  --bg-input: #252320;
+  --bg-hover: #252320;
+  --bg-hover2: #2e2c29;
+  --text-primary: #f0ede8;
+  --text-muted: #9ca3af;
+  --border: #2e2c29;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+  border-color: #8b5cf6 !important;
+}
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+* { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
